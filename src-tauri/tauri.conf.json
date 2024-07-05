@@ -7,8 +7,8 @@
         "distDir": "../out"
     },
     "package": {
-        "productName": "iMessage Upload App",
-        "version": "0.4.3"
+        "productName": "Tooxt Uploader",
+        "version": "0.4.4"
     },
     "tauri": {
         "allowlist": {

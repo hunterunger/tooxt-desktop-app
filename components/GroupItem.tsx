@@ -68,22 +68,6 @@ export function GroupItem(props: {
                         <h2 className=" text-gray-800 font-bold select-text">
                             {displayName}
                         </h2>
-                        {/* 
-                        <button
-                            className=" hover:opacity-100 duration-100"
-                            onClick={() => {
-                                props.onPin?.();
-                            }}
-                        >
-                            {props.curentPin === chatroom.chat_id ? (
-                                <IconPinFilled
-                                    size={16}
-                                    className=" text-msg-blue"
-                                />
-                            ) : (
-                                <IconPin size={16} className="opacity-40" />
-                            )}
-                        </button> */}
                     </div>
                     {!!props.chatroom.participants &&
                         props.chatroom.participants.length > 1 && (
@@ -100,51 +84,6 @@ export function GroupItem(props: {
                                 )}
                             </h3>
                         )}
-                    {/* <Menu shadow="sm" width={200} trigger="hover">
-                        <Menu.Target>
-                            <div className="flex items-center flex-row gap-1 mt-2 rounded-full p-1 px-2 w-fit bg-gray-1 cursor-pointer">
-                                <IconCalendarBolt
-                                    size={12}
-                                    stroke={2.4}
-                                    className=" text-primary-1"
-                                />
-                                <h2 className="select-text text-xs">
-                                    {fromToFormatter(
-                                        moment(chatroom.messages[0].date_str),
-                                        moment(
-                                            chatroom.messages[
-                                                chatroom.messages.length - 1
-                                            ].date_str
-                                        )
-                                    )}
-                                </h2>
-                            </div>
-                        </Menu.Target>
-
-                        <Menu.Dropdown w={"min"}>
-                            <Menu.Item
-                                onClick={() => {
-                                    onLoadRelativeDelta(6);
-                                }}
-                            >
-                                Select First 6 Months
-                            </Menu.Item>
-                            <Menu.Item
-                                onClick={() => {
-                                    onLoadRelativeDelta(12);
-                                }}
-                            >
-                                Select First Year
-                            </Menu.Item>
-                            <Menu.Item
-                                onClick={() => {
-                                    onLoadRelativeDelta(24);
-                                }}
-                            >
-                                Select First 2 Years
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu> */}
                 </div>
                 <div className="flex gap-3">
                     <Link
@@ -235,7 +174,7 @@ export function MessageBubble(props: { message: MessageType }) {
         <div
             className={
                 "text-sm p-3 select-text max-w-full " +
-                (containsImage ? "w-full" : "w-fit")
+                (containsImage ? "w-2/3" : "w-fit")
             }
             style={{
                 // gradient

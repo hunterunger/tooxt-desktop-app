@@ -66,7 +66,7 @@ export default function Page() {
             <DiskAccessDialog setPermissionSuccess={setPermissionSuccess} />
             <div className="flex font-bold items-center">
                 <Link href="/">
-                    <IconChevronLeft />
+                    <IconChevronLeft className="dark:text-white" />
                 </Link>
             </div>
             <ProgressStepper step={!projectUrl ? (!isUploading ? 1 : 2) : 3} />
@@ -165,9 +165,9 @@ function DateRangeSelector(props: {
 
                 <Menu.Dropdown w={"min"}>
                     {[
-                        { label: "Last Week", value: 7 },
-                        { label: "Last Month", value: 30 },
-                        { label: "Last Year", value: 365 },
+                        { label: "Previous Week", value: 7 },
+                        { label: "Previous Month", value: 30 },
+                        { label: "Previous Year", value: 365 },
                     ].map((item) => (
                         <Menu.Item
                             key={item.label}

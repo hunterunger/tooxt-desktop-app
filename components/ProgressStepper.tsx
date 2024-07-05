@@ -4,7 +4,7 @@ export default function ProgressStepper(props: { step: number }) {
     return (
         <Stepper
             active={props.step}
-            className="w-full "
+            className="w-full dark:text-white "
             color="#ef8733"
             size="sm"
         >

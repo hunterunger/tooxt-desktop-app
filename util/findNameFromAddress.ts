@@ -9,10 +9,14 @@ export function findNameFromAddress(address: string, contacts: ContactCard[]) {
         if (contact.phones && isPhoneNumber(address)) {
             return contact.phones.some((phone) => {
                 return (
-                    cleanPhoneNumber(phone).includes(
+                    cleanPhoneNumber(address) !== "" &&
+                    cleanPhoneNumber(phone) !== "" &&
+                    (cleanPhoneNumber(phone).includes(
                         cleanPhoneNumber(address)
                     ) ||
-                    cleanPhoneNumber(address).includes(cleanPhoneNumber(phone))
+                        cleanPhoneNumber(address).includes(
+                            cleanPhoneNumber(phone)
+                        ))
                 );
             });
         }
