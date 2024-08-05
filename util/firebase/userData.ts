@@ -154,7 +154,7 @@ export async function deleteListing(docId: string) {
 
 export async function uploadImage(file: File, uid: string): Promise<string> {
     const storage = getStorage();
-    const storageRef = ref(storage, `images/${uid}/${file.name}`);
+    const storageRef = ref(storage, `users/${uid}/${file.name}`);
 
     return new Promise((resolve, reject) => {
         const uploadTask = uploadBytesResumable(storageRef, file);
