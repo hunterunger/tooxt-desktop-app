@@ -1,1 +1,7 @@
 # Tooxt Desktop App
+
+```
+APPLE_SIGNING_IDENTITY=xxxxxxxx
+APPLE_CERTIFICATE="ABC123="
+APPLE_CERTIFICATE_PASSWORD=password
+```
