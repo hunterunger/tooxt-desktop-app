@@ -33,7 +33,7 @@ export default function RootLayout({
             </head>
             <body
                 className={
-                    inter.className + " dark:bg-black bg-white text-black"
+                    inter.className + "  bg-white dark:bg-zinc-900 text-black"
                 }
             >
                 <MantineProvider

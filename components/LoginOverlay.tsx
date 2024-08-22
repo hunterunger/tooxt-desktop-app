@@ -22,8 +22,8 @@ export default function LoginOverlay(props: { onClose?: () => void }) {
                 />
                 <div>
                     <img
-                        src={"/logo.png"}
-                        className="w-full h-24 mx-auto mb-4 object-contain"
+                        src={"/logo.png?"}
+                        className="w-full h-12 mx-auto mb-4 object-contain"
                         alt="logo"
                     />
                 </div>

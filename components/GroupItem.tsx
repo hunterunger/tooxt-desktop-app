@@ -88,7 +88,7 @@ export function GroupItem(props: {
                 <div className="flex gap-3">
                     <Link
                         className={
-                            " text-white rounded-md flex gap-1 items-center bg-black p-2 px-2 text-sm h-min " +
+                            " text-white rounded-md flex gap-1 items-center bg-primary-1 p-2 px-2 text-sm h-min font-semibold " +
                             (user ? "" : "opacity-40")
                         }
                         href={"/details?id=" + chatroom.chat_id}

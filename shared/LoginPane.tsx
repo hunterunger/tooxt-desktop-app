@@ -1,8 +1,7 @@
 "use client";
 
 import {
-    Button,
-    Loader,
+    Center,
     PasswordInput,
     SegmentedControl,
     TextInput,
@@ -16,6 +15,10 @@ import {
 } from "firebase/auth";
 import { useForm } from "@mantine/form";
 import { firebaseAuth } from "@/util/firebase/firebaseFrontend";
+import Loader from "./Loader";
+import { setUserData } from "@/util/firebase/userData";
+import { IconExternalLink } from "@tabler/icons-react";
+import { webAppUrl } from "@/util/webAppUrl";
 
 export default function LoginPane() {
     const [user, loading] = useAuthState(firebaseAuth);
@@ -29,6 +32,8 @@ export default function LoginPane() {
         initialValues: {
             email: "",
             password: "",
+            firstName: "",
+            lastName: "",
         },
         validate: {
             email: (value) =>
@@ -40,9 +45,9 @@ export default function LoginPane() {
 
     if (loading || loadingLogin) {
         return (
-            <div className="flex flex-col gap-4 p-3">
-                <Loader color="black" size="sm" variant="dots" />
-            </div>
+            <Center className="m-12">
+                <Loader />
+            </Center>
         );
     }
 
@@ -51,9 +56,9 @@ export default function LoginPane() {
             <div className=" rounded-lg border-white">
                 <div className="flex flex-col gap-4 p-4">
                     <div className="flex flex-col gap-4">
-                        <h2 className="">Logged in as {user.email}</h2>
+                        <h2>Logged in as {user.email}</h2>
                         <button
-                            className="bg-white shadow-md text-black p-1"
+                            className="mt-4 bg-primary-1 text-primary-light p-2 rounded-lg hover:bg-primary-light hover:text-primary-1 w-full duration-200 border-primary-1 border-2"
                             onClick={() => {
                                 const auth = getAuth();
                                 auth.signOut();
@@ -79,6 +84,13 @@ export default function LoginPane() {
                             loginForm.values.password
                         )
                             .then((userCredential) => {
+                                setUserData(userCredential.user.uid, {
+                                    name: {
+                                        first: loginForm.values.firstName,
+                                        last: loginForm.values.lastName,
+                                    },
+                                });
+
                                 setLoadingLogin(false);
                             })
                             .catch((error) => {
@@ -118,6 +130,7 @@ export default function LoginPane() {
                             });
                     }
                 })}
+                className="flex flex-col gap-3"
             >
                 <SegmentedControl
                     value={loginMode}
@@ -127,33 +140,45 @@ export default function LoginPane() {
                         { label: "Login With Account", value: "login" },
                         { label: "Create Account", value: "create" },
                     ]}
+                    bg="none"
                 />
-                <TextInput
-                    label="Email"
-                    placeholder="Enter your email"
-                    type="email"
-                    // required
-                    {...loginForm.getInputProps("email")}
-                />
-                <PasswordInput
-                    label="Password"
-                    placeholder={
-                        loginMode === "create"
-                            ? "Create a password"
-                            : "Enter your password"
-                    }
-                    // required
-                    {...loginForm.getInputProps("password")}
-                />
-                <Button
-                    mt={"md"}
-                    fullWidth
-                    variant="outline"
-                    type="submit"
-                    color="black"
-                >
-                    {loginMode === "create" ? "Create Account" : "Login"}
-                </Button>
+                {loginMode === "login" ? (
+                    <>
+                        <TextInput
+                            label="Email"
+                            placeholder="Enter your email"
+                            type="email"
+                            required
+                            {...loginForm.getInputProps("email")}
+                            className=" font-medium"
+                        />
+                        <PasswordInput
+                            label="Password"
+                            placeholder={"Enter your password"}
+                            required
+                            {...loginForm.getInputProps("password")}
+                            className=" font-medium"
+                        />
+                        <button
+                            className="mt-4 bg-primary-1 text-primary-light p-2 rounded-lg hover:bg-primary-light hover:text-primary-1 w-full duration-200 border-primary-1 border-2 text-white"
+                            type="submit"
+                            color="black"
+                        >
+                            "Login"
+                        </button>
+                    </>
+                ) : (
+                    <div className="w-full py-12">
+                        <a
+                            href={webAppUrl + "login"}
+                            target="_blank"
+                            className=" bg-primary-1 text-white rounded-md p-2 px-4 flex gap-2 items-center font-medium text-lg"
+                        >
+                            {"Set Up Account"}
+                            <IconExternalLink size={24} />
+                        </a>
+                    </div>
+                )}
             </form>
         </div>
     );

@@ -129,109 +129,111 @@ export default function Home() {
             {openLoginPanel && (
                 <LoginOverlay onClose={() => setOpenLoginPanel(false)} />
             )}
-            <main className="flex min-h-screen flex-col gap-3 p-3">
+            <main className="flex min-h-screen flex-col gap-3">
                 <DiskAccessDialog setPermissionSuccess={setPermissionSuccess} />
 
-                <div className="flex gap-2 justify-between ">
-                    {/* <DateRangeSelector dateFilter={dateFilter} setDateFilter={setDateFilter} /> */}
-                    <img src="/logo.png" className="w-24 h-full" />
-                    {loading ? (
-                        <></>
-                    ) : user ? (
-                        <button
-                            onClick={() => {
-                                const auth = firebaseAuth;
-                                auth.signOut();
-                            }}
-                            className=" flex gap-1 text-end flex-row font-medium dark:text-white text-black text-opacity-40 rounded-md w-fit items-center text-xs"
-                        >
-                            Logout <br /> {user.email}
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => setOpenLoginPanel(true)}
-                            className=" flex gap-1 flex-row font-medium bg-msg-blue text-white rounded-md w-fit items-center text-sm"
-                        >
-                            <IconLogin size={16} />
-                            Login
-                        </button>
-                    )}
-                </div>
-                <ProgressStepper step={0} />
-                <div className=" row gap-3 hidden">
-                    <ThemedButton
-                        onClick={() => {
-                            open({
-                                filters: [
-                                    {
-                                        name: "Database",
-                                        extensions: ["db"],
-                                    },
-                                ],
-                            }).then((result) => {
-                                if (result === undefined) return;
-                                // result is either an array, string, or undefined
-                                if (Array.isArray(result)) {
-                                    setDatabasePath(result[0]);
-                                } else if (typeof result === "string") {
-                                    setDatabasePath(result);
-                                }
-                            });
-                        }}
-                    >
-                        <IconFolder size={16} />
-                        Custom
-                    </ThemedButton>
-                    <div>
-                        {databasePath === "" ? (
+                <div className="flex flex-col gap-3 fixed  bg-white dark:bg-zinc-800  w-full z-20 p-3">
+                    <div className="flex gap-2 justify-between ">
+                        {/* <DateRangeSelector dateFilter={dateFilter} setDateFilter={setDateFilter} /> */}
+                        <img src="/logo.png?" className="w-24 h-full" />
+                        {loading ? (
                             <></>
+                        ) : user ? (
+                            <button
+                                onClick={() => {
+                                    const auth = firebaseAuth;
+                                    auth.signOut();
+                                }}
+                                className=" flex gap-1 text-end flex-row font-medium dark:text-white text-black text-opacity-40 rounded-md w-fit items-center text-xs"
+                            >
+                                Logout <br /> {user.email}
+                            </button>
                         ) : (
-                            <div className="text-sm text-gray-400">
-                                {trimTextPretty(databasePath, 30, true)}
-                                <IconX
-                                    onClick={() => {
-                                        setDatabasePath("");
-                                    }}
-                                    size={16}
-                                />
-                            </div>
+                            <button
+                                onClick={() => setOpenLoginPanel(true)}
+                                className=" flex gap-1 flex-row font-medium bg-msg-blue text-white rounded-md w-fit items-center text-sm"
+                            >
+                                <IconLogin size={16} />
+                                Login
+                            </button>
                         )}
                     </div>
+                    <ProgressStepper step={0} />
+                    <div className=" row gap-3 hidden">
+                        <ThemedButton
+                            onClick={() => {
+                                open({
+                                    filters: [
+                                        {
+                                            name: "Database",
+                                            extensions: ["db"],
+                                        },
+                                    ],
+                                }).then((result) => {
+                                    if (result === undefined) return;
+                                    // result is either an array, string, or undefined
+                                    if (Array.isArray(result)) {
+                                        setDatabasePath(result[0]);
+                                    } else if (typeof result === "string") {
+                                        setDatabasePath(result);
+                                    }
+                                });
+                            }}
+                        >
+                            <IconFolder size={16} />
+                            Custom
+                        </ThemedButton>
+                        <div>
+                            {databasePath === "" ? (
+                                <></>
+                            ) : (
+                                <div className="text-sm text-gray-400">
+                                    {trimTextPretty(databasePath, 30, true)}
+                                    <IconX
+                                        onClick={() => {
+                                            setDatabasePath("");
+                                        }}
+                                        size={16}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="flex flex-row gap-1 w-full">
+                        <TextInput
+                            className="w-full"
+                            leftSection={<IconSearch size={16} />}
+                            placeholder="Search by contact or group name"
+                            value={search}
+                            onChange={(e) => setSearch(e.currentTarget.value)}
+                            // x to clear
+                            rightSection={
+                                search && (
+                                    <IconX
+                                        onClick={() => {
+                                            setSearch("");
+                                        }}
+                                        size={16}
+                                        className="cursor-pointer"
+                                    />
+                                )
+                            }
+                        />
+                        <NativeSelect
+                            data={[
+                                { label: "Sort by Date", value: "Date" },
+                                { label: "Sort Alphabetically", value: "Name" },
+                                // { label: "Sort by Most Messages", value: "Most" },
+                            ]}
+                            className="w-1/3"
+                            value={sortBy}
+                            onChange={(e) =>
+                                setSortBy(e.currentTarget.value as any)
+                            }
+                        />
+                    </div>
                 </div>
-                <div className="flex flex-row gap-1 w-full">
-                    <TextInput
-                        className="w-full"
-                        leftSection={<IconSearch size={16} />}
-                        placeholder="Search by contact or group name"
-                        value={search}
-                        onChange={(e) => setSearch(e.currentTarget.value)}
-                        // x to clear
-                        rightSection={
-                            search && (
-                                <IconX
-                                    onClick={() => {
-                                        setSearch("");
-                                    }}
-                                    size={16}
-                                    className="cursor-pointer"
-                                />
-                            )
-                        }
-                    />
-                    <NativeSelect
-                        data={[
-                            { label: "Sort by Date", value: "Date" },
-                            { label: "Sort Alphabetically", value: "Name" },
-                            // { label: "Sort by Most Messages", value: "Most" },
-                        ]}
-                        className="w-1/3"
-                        value={sortBy}
-                        onChange={(e) =>
-                            setSortBy(e.currentTarget.value as any)
-                        }
-                    />
-                </div>
-                <Space h="md" />
+                <div className="m-20" />
                 {chatrooms != undefined &&
                     Object.keys(filteredChatrooms).length === 0 && (
                         <div className="text-black text-opacity-50 text-center h-full w-full mt-12 justify-center items-center">
@@ -244,7 +246,7 @@ export default function Home() {
                         Retrieving conversations...
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-3 w-full relative">
+                    <div className="flex flex-col gap-3 w-full relative p-3">
                         {filteredChatrooms.map((chatroom) => (
                             <GroupItem
                                 contacts={contacts || []}

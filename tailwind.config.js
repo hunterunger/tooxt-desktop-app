@@ -16,7 +16,7 @@ module.exports = {
                 "msg-blue": "#46b3fb",
                 "msg-green": "#68d25e",
                 "gray-1": "#e5e5e5",
-                "primary-1": "#e18c48",
+                "primary-1": "#f64e43",
             },
         },
     },

@@ -6,6 +6,8 @@ import { setUserData, uploadProjectPhoto } from "./firebase/userData";
 import { generateUid } from "./generateUid";
 import pako from "pako";
 import { logError } from "./logging";
+import { loadAllContacts } from "./loadAllContacts";
+import { findNameFromAddress } from "./findNameFromAddress";
 
 export default async function uploadImessages(
     chatroom: ChatroomType,
@@ -95,12 +97,22 @@ export default async function uploadImessages(
         }
     }
 
-    // save to firestore
+    // get contacts
+    const allContacts = await loadAllContacts();
+
+    // get the contacts for the participants
+    const allParticipantsNames: string[] = [];
     const contactAliases = chatroom.participants?.reduce(
         (acc, participant, i) => {
+            const contactName = findNameFromAddress(participant, allContacts);
+
+            if (contactName) {
+                allParticipantsNames.push(contactName);
+            }
+
             return {
                 ...acc,
-                [i]: "",
+                [i]: contactName || "",
             };
         },
         { [-1]: "" }
@@ -124,13 +136,21 @@ export default async function uploadImessages(
             "%)"
     );
 
+    const participantsTitle = allParticipantsNames.join(", ");
+
     const newProject: ProjectType = {
         id: newProjectId,
         title:
-            chatroom.display_name || chatroom.chat_identifier || "New Project",
+            chatroom.display_name ||
+            participantsTitle ||
+            chatroom.chat_identifier ||
+            "New Project",
         description:
             "A conversation with " +
-            (chatroom.display_name || chatroom.chat_identifier || "a friend."),
+            (chatroom.display_name ||
+                participantsTitle ||
+                chatroom.chat_identifier ||
+                "a friend."),
 
         created: Date.now(),
         updated: Date.now(),
@@ -152,11 +172,10 @@ export default async function uploadImessages(
     // notify user of completion
     if (attachmentErrors.length > 0) {
         notifications.show({
-            title: "Error exporting attachments",
-            message: `There was an error exporting ${attachmentErrors.length} attachments. This is likely because the related message is not synced to this device.`,
+            title: "Unable to Upload Attachment",
+            message: `There was a problem uploading ${attachmentErrors.length} attachments. This is likely because the related message is not synced to this device. Scroll back through the chat in the Messages app to sync the message.`,
             autoClose: false,
             withCloseButton: true,
-            color: "red",
         });
     }
 

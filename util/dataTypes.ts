@@ -61,6 +61,10 @@ interface Attachment {
 
 export type UserDataType = {
     username?: string;
+    name?: {
+        first: string;
+        last: string;
+    };
     lastLogin?: number;
     lastLoginIP?: string;
     secure?: {

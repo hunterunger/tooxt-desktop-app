@@ -8,7 +8,7 @@
     },
     "package": {
         "productName": "Tooxt Uploader",
-        "version": "0.4.5"
+        "version": "0.5.2"
     },
     "tauri": {
         "allowlist": {
@@ -61,7 +61,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.imessage-upload-app.oxen.dev",
+            "identifier": "com.tooxt.tooxt",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,
@@ -90,7 +90,7 @@
                 "fullscreen": false,
                 "height": 600,
                 "resizable": true,
-                "title": "iMessage Uploader",
+                "title": "Tooxt Uploader",
                 "width": 800,
                 "titleBarStyle": "Transparent",
                 "minHeight": 400,
