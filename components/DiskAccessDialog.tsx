@@ -38,7 +38,7 @@ export default function DiskAccessDialog(props: {
     return (
         <>
             {diskAccessStatus === false && (
-                <div className=" w-full h-full flex flex-col gap-3 justify-center items-center text-center rounded-md bg-yellow-400 text-black p-3 mb-3 shadow-md">
+                <div className=" z-20 w-full h-full flex flex-col gap-3 justify-center items-center text-center rounded-md bg-yellow-400 text-black p-3 mb-3 shadow-md">
                     <p>
                         {`You need to grant full disk access to the app in order
                         to automatically detect and read the iMessage database.`}

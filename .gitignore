@@ -36,3 +36,6 @@ next-env.d.ts
 .env
 # Turborepo
 .turbo
+
+# custom
+certificate-base64.txt

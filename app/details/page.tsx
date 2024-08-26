@@ -109,7 +109,7 @@ export default function Page() {
 
             {!isUploading ? (
                 <>
-                    <div className=" gap-1 flex flex-col border border-gray-200 p-3 rounded-md">
+                    <div className=" gap-1 flex flex-col border dark:border-slate-800 border-gray-200 p-3 rounded-md">
                         {thisChatroom !== undefined &&
                             thisChatroom.messages.map((message) => (
                                 <MessageBubble
@@ -118,7 +118,7 @@ export default function Page() {
                                 />
                             ))}
                         {loadingMessages && (
-                            <div className="flex w-full h-full items-center text-center text-lg justify-center my-12">
+                            <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
                                 <Loader />
                             </div>
                         )}

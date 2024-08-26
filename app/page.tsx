@@ -132,7 +132,7 @@ export default function Home() {
             <main className="flex min-h-screen flex-col gap-3">
                 <DiskAccessDialog setPermissionSuccess={setPermissionSuccess} />
 
-                <div className="flex flex-col gap-3 fixed  bg-white dark:bg-zinc-800  w-full z-20 p-3">
+                <div className="flex flex-col gap-3 fixed  bg-white dark:bg-zinc-800  w-full z-10 p-3">
                     <div className="flex gap-2 justify-between ">
                         {/* <DateRangeSelector dateFilter={dateFilter} setDateFilter={setDateFilter} /> */}
                         <img src="/logo.png?" className="w-24 h-full" />
@@ -241,7 +241,7 @@ export default function Home() {
                         </div>
                     )}
                 {chatrooms === undefined ? (
-                    <div className="flex flex-row text-opacity-50 gap-2 text-center h-full w-full mt-12 justify-center items-center">
+                    <div className=" dark:text-white text-black flex flex-row text-opacity-50 gap-2 text-center h-full w-full mt-12 justify-center items-center">
                         <Loader />
                         Retrieving conversations...
                     </div>
@@ -304,11 +304,7 @@ export default function Home() {
                             />
                         ))}
                         {dateFilter[0]?.getFullYear() !== 2008 && (
-                            <div className="w-full text-center flex gap-3 flex-col justify-center">
-                                <p>
-                                    Showing all conversations in the past 5
-                                    years.
-                                </p>
+                            <div className="w-full text-center flex gap-3 flex-col justify-center text-black dark:text-white">
                                 <button
                                     onClick={() => {
                                         // change the time range to Jan 1, 2008
@@ -321,7 +317,7 @@ export default function Home() {
                                     className=" bg-primary-1 text-white rounded-md px-2 py-1 font-medium w-fit self-center flex items-center gap-2"
                                 >
                                     <IconHistory size={16} />
-                                    Load all message history
+                                    Load more history
                                 </button>
                             </div>
                         )}
