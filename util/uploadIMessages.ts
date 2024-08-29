@@ -8,6 +8,7 @@ import pako from "pako";
 import { logError } from "./logging";
 import { loadAllContacts } from "./loadAllContacts";
 import { findNameFromAddress } from "./findNameFromAddress";
+import { joinWithLastWord } from "./joinWithLastWord";
 
 export default async function uploadImessages(
     chatroom: ChatroomType,
@@ -136,7 +137,7 @@ export default async function uploadImessages(
             "%)"
     );
 
-    const participantsTitle = allParticipantsNames.join(", ");
+    const participantsTitle = joinWithLastWord(allParticipantsNames, "&");
 
     const newProject: ProjectType = {
         id: newProjectId,
@@ -148,7 +149,7 @@ export default async function uploadImessages(
         description:
             "A conversation with " +
             (chatroom.display_name ||
-                participantsTitle ||
+                joinWithLastWord(allParticipantsNames, "and") ||
                 chatroom.chat_identifier ||
                 "a friend."),
 

@@ -13,8 +13,8 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    # - platform: "macos-latest" # for Arm based macs (M1 and above).
-                    #   args: "--target aarch64-apple-darwin"
+                    - platform: "macos-latest" # for Arm based macs (M1 and above).
+                      args: "--target aarch64-apple-darwin"
                     - platform: "macos-latest" # for Intel based macs.
                       args: "--target x86_64-apple-darwin"
 
@@ -62,7 +62,7 @@ jobs:
                   # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
               with:
                   tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
-                  releaseName: "App v__VERSION__"
+                  releaseName: "Tooxt Uploader v__VERSION__"
                   releaseBody: "See the assets to download this version and install."
                   releaseDraft: true
                   prerelease: false
