@@ -65,13 +65,12 @@
             "longDescription": "",
             "macOS": {
                 "entitlements": null,
-                "exceptionDomain": "",
+                "exceptionDomain": "tooxt.com",
                 "frameworks": [],
-                "providerShortName": null,
-                "signingIdentity": null
+                "signingIdentity": "7G63QWJ369"
             },
             "resources": [],
-            "shortDescription": "",
+            "shortDescription": "Tooxt Uploader",
             "targets": "all",
             "windows": {
                 "certificateThumbprint": null,
