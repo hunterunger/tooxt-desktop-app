@@ -164,13 +164,13 @@ export default function LoginPane() {
                             type="submit"
                             color="black"
                         >
-                            "Login"
+                            Login
                         </button>
                     </>
                 ) : (
                     <div className="w-full py-12">
                         <a
-                            href={webAppUrl + "login"}
+                            href={webAppUrl + "/create-account"}
                             target="_blank"
                             className=" bg-primary-1 text-white rounded-md p-2 px-4 flex gap-2 items-center font-medium text-lg"
                         >
