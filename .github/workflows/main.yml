@@ -13,10 +13,10 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - platform: "macos-latest" # for Arm based macs (M1 and above).
-                      args: "--target aarch64-apple-darwin"
                     - platform: "macos-latest" # for Intel based macs.
                       args: "--target x86_64-apple-darwin"
+                    # - platform: "macos-latest" # for Arm based macs (M1 and above).
+                    #   args: "--target aarch64-apple-darwin"
 
         runs-on: ${{ matrix.platform }}
         steps:
@@ -40,7 +40,7 @@ jobs:
               uses: dtolnay/rust-toolchain@stable
               if: matrix.platform == 'macos-latest'
               with:
-                  targets: "aarch64-apple-darwin,x86_64-apple-darwin"
+                  targets: "x86_64-apple-darwin"
 
             - name: Rust cache
               uses: swatinem/rust-cache@v2
