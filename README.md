@@ -1,7 +1,7 @@
 # Tooxt Desktop App
 
-```
-APPLE_SIGNING_IDENTITY=xxxxxxxx
-APPLE_CERTIFICATE="ABC123="
-APPLE_CERTIFICATE_PASSWORD=password
-```
+The source code to the desktop app for Tooxt Uploader.
+
+Download at [app.tooxt.com/download](https://app.tooxt.com/download)
+
+Please read licence for more information.
