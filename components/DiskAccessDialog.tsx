@@ -40,8 +40,7 @@ export default function DiskAccessDialog(props: {
             {diskAccessStatus === false && (
                 <div className=" z-20 w-full h-full flex flex-col gap-3 justify-center items-center text-center rounded-md bg-yellow-400 text-black p-3 mb-3 shadow-md">
                     <p>
-                        {`You need to grant full disk access to the app in order
-                        to automatically detect and read the iMessage database.`}
+                        {`To create your book, please grant full disk access to the app, ensuring Tooxt can securely access your iMessage database - with all your data fully encrypted to protect your privacy at every step.`}
                     </p>
                     <button
                         className="bg-white text-black rounded-md px-2 py-1 flex items-center gap-2"
@@ -54,7 +53,7 @@ export default function DiskAccessDialog(props: {
                         <IconSettings size={16} />
                         Open System Settings
                     </button>
-                    <button
+                    {/* <button
                         // check again
                         className="bg-white text-black rounded-md px-2 py-1 flex items-center gap-2"
                         onClick={() => {
@@ -63,7 +62,7 @@ export default function DiskAccessDialog(props: {
                     >
                         <IconRefreshDot size={16} />
                         Check Again
-                    </button>
+                    </button> */}
                 </div>
             )}
 
