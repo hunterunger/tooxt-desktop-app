@@ -1,5 +1,4 @@
 import { User } from "firebase/auth";
-import { ChatroomType, ProjectType } from "./dataTypes";
 import { notifications } from "@mantine/notifications";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
 import { setUserData, uploadProjectPhoto } from "./firebase/userData";
@@ -9,6 +8,8 @@ import { logError } from "./logging";
 import { loadAllContacts } from "./loadAllContacts";
 import { findNameFromAddress } from "./findNameFromAddress";
 import { joinWithLastWord } from "./joinWithLastWord";
+import { ChatroomType } from "@/ts/messageTypes";
+import { ProjectType } from "@/ts/dataTypes";
 
 export default async function uploadImessages(
     chatroom: ChatroomType,
@@ -161,6 +162,8 @@ export default async function uploadImessages(
 
         attachmentSavePaths,
         compressedChatroom: compressedMessagesBase64,
+        projectName: "",
+        subtitle: "",
     };
     await setUserData(user?.uid || "", {
         projects: {

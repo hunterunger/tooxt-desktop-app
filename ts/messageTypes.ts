@@ -45,7 +45,7 @@ export type ChatroomType = {
     rowid: number;
     service_name: ServiceOptions;
     messages: MessageType[];
-    contact_book_name: string | null;
+    contact_book_name?: string | null;
 };
 
 interface Attachment {
@@ -54,52 +54,7 @@ interface Attachment {
     transfer_name: string;
     hide_attachment: boolean;
     mime_type: string | null;
-    uti: string;
-    total_bytes: number;
+    uti?: string;
+    total_bytes?: number;
     is_sticker: boolean;
 }
-
-export type UserDataType = {
-    username?: string;
-    name?: {
-        first: string;
-        last: string;
-    };
-    lastLogin?: number;
-    lastLoginIP?: string;
-    secure?: {
-        plan: string;
-    };
-    projects?: Record<string, ProjectType>;
-};
-
-export type ProjectType = {
-    platform:
-        | "imessage"
-        | "whatsapp"
-        | "facebook"
-        | "instagram"
-        | "twitter"
-        | "snapchat"
-        | "discord"
-        | "slack"
-        | "telegram"
-        | "signal"
-        | "other";
-    id: string;
-    title: string;
-    description: string;
-
-    created: number;
-    updated: number;
-    secure?: {
-        plan: string;
-    };
-
-    attachmentSavePaths?: string[];
-    chatroom?: ChatroomType;
-    compressedChatroom?: string;
-
-    contactAliases?: Record<string, string>;
-    featureImageFilename?: string;
-};

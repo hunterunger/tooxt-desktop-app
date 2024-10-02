@@ -1,4 +1,4 @@
-import { ChatroomType, MessageType } from "@/util/dataTypes";
+import { ChatroomType, MessageType } from "@/ts/messageTypes";
 
 const fakeMessageBase: MessageType = {
     associated_message_guid: null,

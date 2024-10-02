@@ -1,23 +1,18 @@
 "use client";
-import { ChatroomType, MessageType } from "@/util/dataTypes";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
-import moment from "moment";
 import { useEffect, useState } from "react";
-import { Loader, Menu } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import {
-    IconCalendarBolt,
     IconChevronDown,
     IconChevronRight,
     IconFile,
     IconPhoto,
-    IconPin,
-    IconPinFilled,
 } from "@tabler/icons-react";
 import { User } from "firebase/auth";
-import { fromToFormatter } from "@/util/fromToFormatter";
 import Image from "next/image";
 import { ContactCard } from "@/util/addressBookTools";
 import Link from "next/link";
+import { ChatroomType, MessageType } from "@/ts/messageTypes";
 
 export function GroupItem(props: {
     chatroom: ChatroomType;

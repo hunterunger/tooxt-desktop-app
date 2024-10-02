@@ -8,7 +8,7 @@
     },
     "package": {
         "productName": "Tooxt Uploader",
-        "version": "0.5.6"
+        "version": "0.5.7"
     },
     "tauri": {
         "allowlist": {
@@ -76,6 +76,20 @@
                 "certificateThumbprint": null,
                 "digestAlgorithm": "sha256",
                 "timestampUrl": ""
+            },
+            "dmg": {
+                "appPosition": {
+                    "x": 180,
+                    "y": 170
+                },
+                "applicationFolderPosition": {
+                    "x": 480,
+                    "y": 170
+                },
+                "windowSize": {
+                    "height": 400,
+                    "width": 660
+                }
             }
         },
         "security": {

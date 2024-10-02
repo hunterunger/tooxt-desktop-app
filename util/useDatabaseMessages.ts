@@ -4,7 +4,7 @@ import { ContactCard } from "./addressBookTools";
 import { loadAllContacts } from "./loadAllContacts";
 import { invoke } from "@tauri-apps/api/tauri";
 import { findNameFromAddress } from "./findNameFromAddress";
-import { ChatroomType } from "./dataTypes";
+import { ChatroomType } from "@/ts/messageTypes";
 
 export default function useDatabaseMessages(
     databasePath: string,

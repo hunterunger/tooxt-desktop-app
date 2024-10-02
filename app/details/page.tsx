@@ -1,26 +1,33 @@
 "use client";
 import DiskAccessDialog from "@/components/DiskAccessDialog";
 import useDatabaseMessages from "@/util/useDatabaseMessages";
-import { DatePicker, DatePickerInput } from "@mantine/dates";
+import { DatePicker } from "@mantine/dates";
 import moment from "moment";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageBubble } from "../../components/GroupItem";
 import {
+    IconBook2,
     IconCalendarBolt,
     IconChevronLeft,
     IconChevronRight,
     IconExternalLink,
+    IconFileText,
+    IconMessageCircle,
 } from "@tabler/icons-react";
 import { Menu } from "@mantine/core";
 import ProgressStepper from "@/components/ProgressStepper";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { invoke } from "@tauri-apps/api/tauri";
-import { ChatroomType } from "@/util/dataTypes";
 import uploadImessages from "@/util/uploadIMessages";
 import generateProjectEditorUrl from "@/util/generateProjectEditorUrl";
 import Loader from "@/shared/Loader";
+import ChatHistoryHtml from "@/components/mockPdf/MockChatHistoryPdf";
+import React from "react";
+import { ChatroomType } from "@/ts/messageTypes";
+import pagesToBooks from "@/components/pagesToBooks";
+import pluralize from "@/util/pluralize";
 
 export default function Page() {
     const [user, loading] = useAuthState(getAuth());
@@ -28,6 +35,8 @@ export default function Page() {
     const [isUploading, setIsUploading] = useState<boolean>(false);
 
     const [projectUrl, setProjectUrl] = useState<string>("");
+
+    const [estimatedPages, setEstimatedPages] = useState<number>();
 
     const searchParams =
         typeof window !== "undefined"
@@ -55,6 +64,11 @@ export default function Page() {
         undefined
     );
 
+    useEffect(() => {
+        // reset the estimated pages when the date filter changes
+        setEstimatedPages(undefined);
+    }, [chatrooms]);
+
     if (chatId === null || typeof chatId !== "string") {
         return <div>Invalid chat id</div>;
     }
@@ -63,6 +77,29 @@ export default function Page() {
 
     return (
         <div className="flex flex-col gap-3">
+            <div className=" absolute -z-50 opacity-0 ">
+                {thisChatroom !== undefined && estimatedPages === undefined && (
+                    <ChatHistoryHtml
+                        project={{
+                            id: "",
+                            title: "New Project",
+                            description: "A conversation  ",
+                            projectName: "New Project",
+                            subtitle: "A conversation",
+
+                            created: Date.now(),
+                            updated: Date.now(),
+                            contactAliases: {},
+
+                            platform: "imessage",
+
+                            attachmentSavePaths: [],
+                            uncompressedChatroom: thisChatroom,
+                        }}
+                        setEstimatedPages={setEstimatedPages}
+                    />
+                )}
+            </div>
             <div className="fixed w-full p-3 bg-white dark:bg-zinc-800 z-20 flex flex-col gap-3">
                 <DiskAccessDialog setPermissionSuccess={setPermissionSuccess} />
                 <div className="flex font-bold items-center">
@@ -104,8 +141,24 @@ export default function Page() {
                         </button>
                     </div>
                 )}
+                {thisChatroom ? (
+                    <h3 className=" text-sm dark:text-white text-black text-opacity-50 flex gap-1 items-center self-end">
+                        <IconMessageCircle size={16} />
+                        {thisChatroom.messages.length + " messages"}
+                        <IconFileText size={16} />
+
+                        {estimatedPages + " pages"}
+
+                        <IconBook2 size={16} />
+                        {pagesToBooks(estimatedPages) +
+                            " " +
+                            pluralize("book", pagesToBooks(estimatedPages))}
+                    </h3>
+                ) : (
+                    <></>
+                )}
             </div>
-            <div className="m-16 " />
+            <div className="m-20 " />
 
             {!isUploading ? (
                 <>
@@ -123,7 +176,7 @@ export default function Page() {
                             </div>
                         )}
                         {thisChatroom === undefined && !loadingMessages && (
-                            <div className="flex w-full h-full items-center text-center text-lg justify-center my-12">
+                            <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
                                 No messages for this timeframe
                             </div>
                         )}

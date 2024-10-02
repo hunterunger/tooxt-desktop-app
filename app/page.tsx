@@ -3,10 +3,9 @@
 import DiskAccessDialog from "@/components/DiskAccessDialog";
 import LoginOverlay from "@/components/LoginOverlay";
 import Loader from "@/shared/Loader";
-import { ChatroomType } from "@/util/dataTypes";
 import { firebaseAuth } from "@/util/firebase/firebaseFrontend";
 import trimTextPretty from "@/util/trimTextPretty";
-import { NativeSelect, Space, TextInput } from "@mantine/core";
+import { NativeSelect, TextInput } from "@mantine/core";
 import {
     IconFolder,
     IconHistory,
@@ -22,6 +21,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { GroupItem } from "../components/GroupItem";
 import useDatabaseMessages from "@/util/useDatabaseMessages";
 import ProgressStepper from "@/components/ProgressStepper";
+import { ChatroomType } from "@/ts/messageTypes";
 
 export default function Home() {
     const [user, loading] = useAuthState(firebaseAuth);

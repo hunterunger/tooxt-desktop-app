@@ -1,4 +1,4 @@
-import { ChatroomType } from "@/util/dataTypes";
+import { ChatroomType } from "@/ts/messageTypes";
 import { notifications } from "@mantine/notifications";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
 import JSZip from "jszip";

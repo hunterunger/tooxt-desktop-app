@@ -19,8 +19,8 @@ import {
     uploadBytesResumable,
     getDownloadURL,
 } from "firebase/storage";
-import { UserDataType } from "../dataTypes";
 import enpoints from "@/shared/enpoints";
+import { UserDataType } from "@/ts/dataTypes";
 
 export async function getUserData(
     uid: string

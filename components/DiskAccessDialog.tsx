@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/shell";
-import { ArrowsRightLeftIcon, CogIcon } from "@heroicons/react/24/outline";
 import getPlatform from "./../util/identifyPlatform";
-import { IconRefreshDot, IconSettings } from "@tabler/icons-react";
+import { IconSettings } from "@tabler/icons-react";
+import React from "react";
 
 export default function DiskAccessDialog(props: {
     setPermissionSuccess: (value: boolean) => void;

@@ -85,10 +85,8 @@ export default function LoginPane() {
                         )
                             .then((userCredential) => {
                                 setUserData(userCredential.user.uid, {
-                                    name: {
-                                        first: loginForm.values.firstName,
-                                        last: loginForm.values.lastName,
-                                    },
+                                    firstName: loginForm.values.firstName,
+                                    lastName: loginForm.values.lastName,
                                 });
 
                                 setLoadingLogin(false);

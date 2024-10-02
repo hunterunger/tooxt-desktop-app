@@ -1,0 +1,175 @@
+.global {
+    font-family: "Inter", sans-serif;
+}
+
+.titlePage,
+.descriptionPage,
+.interiorPages,
+.backCoverPage {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center; */
+    width: 100%;
+}
+
+.titlePage {
+    background-color: #d1e5e7;
+    gap: 12px;
+}
+
+.titleImageContainer {
+    aspect-ratio: 0.9;
+    background-color: white;
+    position: relative;
+    width: 75%;
+    overflow: hidden;
+    object-fit: cover;
+    border: 8px solid white;
+}
+
+.coverImageBackground,
+.titleImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.titleText {
+    font-size: 36px;
+    text-align: center;
+    white-space: pre-line;
+    color: #434343;
+    font-weight: 800;
+}
+
+.subtitleText {
+    font-size: 12px;
+    text-align: center;
+    white-space: pre-line;
+    color: #434343;
+    font-weight: 800;
+}
+
+.descriptionText {
+    max-width: 512px;
+    font-size: 14px;
+    white-space: pre-line;
+    text-align: center;
+}
+
+.sampleNotice {
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.backCoverPage {
+    background-color: #cad9fc;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10% 15%;
+}
+
+.messageContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dateLabel {
+    text-align: center;
+    font-size: 8px;
+    color: white;
+    background-color: grey;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border-radius: 30px;
+    padding: 2px 16px;
+    align-self: center;
+}
+
+.timeGap {
+    height: 16px;
+}
+
+.bubbleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: -10px;
+    margin: 2px 0;
+    width: 100%;
+}
+
+.bubble {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: flex-end;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 8px;
+    padding: 6px 10px;
+    max-width: 66%;
+    margin: 0 5px;
+    width: fit-content;
+    max-width: 66%;
+}
+
+.bubbleLabel {
+    color: black;
+    opacity: 0.5;
+    font-size: 6px;
+}
+
+.imageAttachment {
+    margin-top: -6px;
+    margin: 0 -10px;
+    width: 100px;
+    background-color: white;
+    /* object-fit: cover; */
+    aspect-ratio: 1;
+}
+
+.otherAttachment {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.fromMe {
+    align-items: flex-end;
+}
+
+.fromThem {
+    align-items: flex-start;
+}
+
+.pageNumber {
+    bottom: 24px;
+    width: 100%;
+    text-align: center;
+    font-size: 8px;
+    position: absolute;
+}
+
+.page {
+    width: 100%;
+    flex-direction: column;
+    position: relative;
+    page-break-after: always;
+    overflow: scroll;
+    background-color: white;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pageContent {
+    border: red solid 1px;
+}
