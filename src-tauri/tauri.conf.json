@@ -76,20 +76,6 @@
                 "certificateThumbprint": null,
                 "digestAlgorithm": "sha256",
                 "timestampUrl": ""
-            },
-            "dmg": {
-                "appPosition": {
-                    "x": 180,
-                    "y": 170
-                },
-                "applicationFolderPosition": {
-                    "x": 480,
-                    "y": 170
-                },
-                "windowSize": {
-                    "height": 400,
-                    "width": 660
-                }
             }
         },
         "security": {
