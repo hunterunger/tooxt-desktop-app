@@ -10,6 +10,8 @@ import { findNameFromAddress } from "./findNameFromAddress";
 import { joinWithLastWord } from "./joinWithLastWord";
 import { ChatroomType } from "@/ts/messageTypes";
 import { ProjectType } from "@/ts/dataTypes";
+import { logEvent } from "firebase/analytics";
+import { firebaseAnalytics } from "./firebase/firebaseFrontend";
 
 export default async function uploadImessages(
     chatroom: ChatroomType,
@@ -173,8 +175,20 @@ export default async function uploadImessages(
 
     notifications.hide(progressNotificationId);
 
+    logEvent(firebaseAnalytics, "user_upload_imessage", {
+        projectId: newProjectId,
+        uid: user.uid,
+        attachments: totalAttachments,
+    });
+
     // notify user of completion
     if (attachmentErrors.length > 0) {
+        logEvent(firebaseAnalytics, "upload_imessage_attachments_error", {
+            projectId: newProjectId,
+            uid: user.uid,
+            attachments: attachmentErrors.length,
+        });
+
         notifications.show({
             title: "Unable to Upload Attachment",
             message: `There was a problem uploading ${attachmentErrors.length} attachments. This is likely because the related message is not synced to this device. Scroll back through the chat in the Messages app to sync the message.`,

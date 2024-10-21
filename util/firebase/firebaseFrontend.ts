@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { FirebaseOptions, getApp, initializeApp } from "firebase/app";
 import firebaseConfig from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
@@ -21,7 +21,7 @@ export const firebaseAuth = getAuth(firebaseApp);
 let firebaseAnalytics: Analytics;
 
 // check if we are in a browser
-if ( typeof window !== 'undefined' ) {
+if (typeof window !== "undefined") {
     firebaseAnalytics = getAnalytics(firebaseApp);
 }
 export { firebaseAnalytics };

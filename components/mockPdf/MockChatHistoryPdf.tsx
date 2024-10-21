@@ -21,9 +21,7 @@ export default function ChatHistoryHtml(props: {
             Math.ceil(totalHeight / pagePaperSize.height) + 3 + 1; // covers + 3 extra pages
 
         console.log("estimated pages", estimatedPages);
-        if (props.setEstimatedPages) {
-            props.setEstimatedPages(estimatedPages);
-        }
+        if (props.setEstimatedPages) props.setEstimatedPages(estimatedPages);
     }, []);
 
     return (

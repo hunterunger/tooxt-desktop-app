@@ -65,9 +65,10 @@ export default function Page() {
     );
 
     useEffect(() => {
+        if (!chatrooms) return;
         // reset the estimated pages when the date filter changes
-        setEstimatedPages(undefined);
-    }, [chatrooms]);
+        if (estimatedPages !== undefined) setEstimatedPages(undefined);
+    }, [chatrooms?.[chatId + ""].messages.length, dateFilter]);
 
     if (chatId === null || typeof chatId !== "string") {
         return <div>Invalid chat id</div>;
@@ -77,7 +78,7 @@ export default function Page() {
 
     return (
         <div className="flex flex-col gap-3">
-            <div className=" absolute -z-50 opacity-0 ">
+            <div className=" absolute opacity-0">
                 {thisChatroom !== undefined && estimatedPages === undefined && (
                     <ChatHistoryHtml
                         project={{
@@ -145,14 +146,25 @@ export default function Page() {
                     <h3 className=" text-sm dark:text-white text-black text-opacity-50 flex gap-1 items-center self-end">
                         <IconMessageCircle size={16} />
                         {thisChatroom.messages.length + " messages"}
-                        <IconFileText size={16} />
 
-                        {estimatedPages + " pages"}
+                        {estimatedPages ? (
+                            <>
+                                <IconFileText size={16} />
+                                {estimatedPages + " pages"}
+                            </>
+                        ) : null}
 
-                        <IconBook2 size={16} />
-                        {pagesToBooks(estimatedPages) +
-                            " " +
-                            pluralize("book", pagesToBooks(estimatedPages))}
+                        {estimatedPages ? (
+                            <>
+                                <IconBook2 size={16} />
+                                {pagesToBooks(estimatedPages) +
+                                    " " +
+                                    pluralize(
+                                        "book",
+                                        pagesToBooks(estimatedPages)
+                                    )}
+                            </>
+                        ) : null}
                     </h3>
                 ) : (
                     <></>
