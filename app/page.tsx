@@ -236,7 +236,7 @@ export default function Home() {
                 <div className="m-20" />
                 {chatrooms != undefined &&
                     Object.keys(filteredChatrooms).length === 0 && (
-                        <div className="text-black text-opacity-50 text-center h-full w-full mt-12 justify-center items-center">
+                        <div className="dark:text-white text-black text-opacity-50 text-center h-full w-full mt-12 justify-center items-center">
                             No messages found with these filters.
                         </div>
                     )}

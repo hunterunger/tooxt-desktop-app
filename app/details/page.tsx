@@ -8,14 +8,12 @@ import { useEffect, useState } from "react";
 import { MessageBubble } from "../../components/GroupItem";
 import {
     IconBook2,
-    IconCalendarBolt,
     IconChevronLeft,
     IconChevronRight,
     IconExternalLink,
     IconFileText,
     IconMessageCircle,
 } from "@tabler/icons-react";
-import { Menu } from "@mantine/core";
 import ProgressStepper from "@/components/ProgressStepper";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
@@ -50,6 +48,8 @@ export default function Page() {
         moment().subtract(1, "week").toDate(),
         moment().add(1, "day").toDate(),
     ]);
+    const [didChangeDateFilter, setDidChangeDateFilter] =
+        useState<boolean>(false);
 
     const {
         loadingMessages,
@@ -112,18 +112,35 @@ export default function Page() {
                     step={!projectUrl ? (!isUploading ? 1 : 2) : 3}
                 />
                 {!isUploading && (
-                    <div className="flex justify-between gap-1">
-                        <DateRangeSelector
-                            setDateFilter={setDateFilter}
-                            dateFilter={dateFilter}
-                            databasePath={databasePath}
-                            chatId={parseInt(chatId)}
-                        />
+                    <div className="flex justify-between gap-1 items-center">
+                        <h3 className=" text-sm dark:text-white text-black text-opacity-50 flex gap-1 items-center self-end">
+                            <IconMessageCircle size={16} />
+                            {thisChatroom
+                                ? thisChatroom.messages.length + " messages"
+                                : "0 messages"}
+
+                            <IconFileText size={16} />
+                            {thisChatroom && estimatedPages !== undefined
+                                ? estimatedPages + " pages"
+                                : " 0 pages"}
+
+                            <IconBook2 size={16} />
+                            {thisChatroom && estimatedPages !== undefined
+                                ? pagesToBooks(estimatedPages) +
+                                  " " +
+                                  pluralize(
+                                      "book",
+                                      pagesToBooks(estimatedPages)
+                                  )
+                                : " 0 books"}
+                        </h3>
                         <button
                             className={
                                 " text-white rounded-md flex gap-1 items-center bg-primary-1 font-semibold p-2 px-2 text-sm h-min " +
-                                (user ? "" : "opacity-40")
+                                (user ? "" : "opacity-40") +
+                                (didChangeDateFilter ? "" : "opacity-40")
                             }
+                            disabled={!didChangeDateFilter}
                             onClick={() => {
                                 if (!user || !thisChatroom) return;
                                 setIsUploading(true);
@@ -137,44 +154,32 @@ export default function Page() {
                                 );
                             }}
                         >
-                            {"Upload"}
+                            {!didChangeDateFilter
+                                ? "Select a Timeframe to Upload"
+                                : "Upload"}
                             <IconChevronRight size={16} />
                         </button>
                     </div>
                 )}
-                {thisChatroom ? (
-                    <h3 className=" text-sm dark:text-white text-black text-opacity-50 flex gap-1 items-center self-end">
-                        <IconMessageCircle size={16} />
-                        {thisChatroom.messages.length + " messages"}
-
-                        {estimatedPages ? (
-                            <>
-                                <IconFileText size={16} />
-                                {estimatedPages + " pages"}
-                            </>
-                        ) : null}
-
-                        {estimatedPages ? (
-                            <>
-                                <IconBook2 size={16} />
-                                {pagesToBooks(estimatedPages) +
-                                    " " +
-                                    pluralize(
-                                        "book",
-                                        pagesToBooks(estimatedPages)
-                                    )}
-                            </>
-                        ) : null}
-                    </h3>
-                ) : (
-                    <></>
-                )}
             </div>
-            <div className="m-20 " />
+            <div className="m-16 " />
 
             {!isUploading ? (
-                <>
-                    <div className=" gap-1 flex flex-col border dark:border-slate-800 border-gray-200 p-3 rounded-md">
+                <div className=" flex flex-row h-full debug p-3 gap-3">
+                    <div
+                        onClick={() => {
+                            setDidChangeDateFilter(true);
+                        }}
+                        className="w-fit p-3 bg-white rounded-md h-fit border dark:border-slate-800 border-gray-200"
+                    >
+                        <DateRangeSelector
+                            setDateFilter={setDateFilter}
+                            dateFilter={dateFilter}
+                            databasePath={databasePath}
+                            chatId={parseInt(chatId)}
+                        />
+                    </div>
+                    <div className=" gap-1 flex flex-col border dark:border-slate-800 border-gray-200 p-3 rounded-md overflow-scroll flex-1 h-full">
                         {thisChatroom !== undefined &&
                             thisChatroom.messages.map((message) => (
                                 <MessageBubble
@@ -193,7 +198,7 @@ export default function Page() {
                             </div>
                         )}
                     </div>
-                </>
+                </div>
             ) : (
                 <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
                     {!projectUrl ? (
@@ -203,7 +208,7 @@ export default function Page() {
                         </p>
                     ) : (
                         <div className="flex flex-col gap-3 items-center font-semibold">
-                            <p>Project uploaded </p>
+                            <p>Your Project has been uploaded</p>
                             <a
                                 href={projectUrl}
                                 target="_blank"
@@ -228,102 +233,92 @@ function DateRangeSelector(props: {
     chatId: number;
 }) {
     return (
-        <div className="dark:text-white text-black flex items-center gap-1 rounded-md border-gray-1 border bg-white px-2 cursor-pointer w-fit ">
-            <Menu shadow="md" width={200} trigger="hover">
-                <Menu.Target>
-                    <button className=" flex gap-1 items-center text-sm text-black">
-                        <IconCalendarBolt size={16} className=" " />
-                        {moment(props.dateFilter[0]).format("MMM D, YYYY") +
-                            " to " +
-                            moment(props.dateFilter[1]).format("MMM D, YYYY")}
-                    </button>
-                </Menu.Target>
+        <div className=" h-fit">
+            <div className=" flex flex-col gap-1 justify-start flex-wrap">
+                <div className=" border-b border-black border-opacity-20 mb-3 ">
+                    <h3 className=" flex flex-row items-center gap-1 font-medium mb-3">
+                        Select Date Range
+                    </h3>
+                </div>
 
-                <Menu.Dropdown w={"min"}>
-                    {[
-                        // { label: "Previous Week", value: 7 },
-                        // { label: "Last 30 days", value: 30 },
-                        { label: "Last 6 Months", value: 180 },
-                        { label: "Last 365 Days", value: 365 },
-                    ].map((item) => (
-                        <Menu.Item
-                            key={item.label}
-                            onClick={() => {
+                {[
+                    { label: "Last 6 Months", value: 180 },
+                    { label: "Last 365 Days", value: 365 },
+                ].map((item) => (
+                    <button
+                        className="hover:bg-black duration-100 hover:bg-opacity-10 rounded-md px-3"
+                        key={item.label}
+                        onClick={() => {
+                            props.setDateFilter([
+                                moment().subtract(item.value, "day").toDate(),
+                                moment().add(1, "day").toDate(),
+                            ]);
+                        }}
+                    >
+                        {item.label}
+                    </button>
+                ))}
+                {[
+                    { label: "First 6 Months", value: 6 },
+                    { label: "First Year", value: 12 },
+                    { label: "All Time", value: null },
+                ].map((item) => (
+                    <button
+                        key={item.label}
+                        className="hover:bg-black duration-100 hover:bg-opacity-10 rounded-md px-3"
+                        onClick={() => {
+                            if (item.value === null) {
                                 props.setDateFilter([
-                                    moment()
-                                        .subtract(item.value, "day")
-                                        .toDate(),
+                                    moment().subtract(20, "year").toDate(),
                                     moment().add(1, "day").toDate(),
                                 ]);
-                            }}
-                        >
-                            {item.label}
-                        </Menu.Item>
-                    ))}
-                    {[
-                        { label: "First 6 Months", value: 6 },
-                        { label: "First Year", value: 12 },
-                        { label: "All Time", value: null },
-                    ].map((item) => (
-                        <Menu.Item
-                            key={item.label}
-                            className=" cursor-pointer"
-                            onClick={() => {
-                                if (item.value === null) {
-                                    props.setDateFilter([
-                                        moment().subtract(20, "year").toDate(),
-                                        moment().add(1, "day").toDate(),
-                                    ]);
-                                    return;
-                                }
+                                return;
+                            }
 
-                                invoke<string>("get_messages", {
-                                    custompath: props.databasePath,
-                                    fromdate: "2007-01-01",
-                                    todate: "2037-01-01",
-                                    chatidfilter: props.chatId,
-                                    maxmessagespergroup: undefined,
-                                }).then((data) => {
-                                    const newChatrooms: {
-                                        [key: string]: ChatroomType;
-                                    } = JSON.parse(data);
+                            invoke<string>("get_messages", {
+                                custompath: props.databasePath,
+                                fromdate: "2007-01-01",
+                                todate: "2037-01-01",
+                                chatidfilter: props.chatId,
+                                maxmessagespergroup: undefined,
+                            }).then((data) => {
+                                const newChatrooms: {
+                                    [key: string]: ChatroomType;
+                                } = JSON.parse(data);
 
-                                    // get the first occuring date
-                                    const firstChatroom =
-                                        newChatrooms[
-                                            Object.keys(newChatrooms)[0]
-                                        ];
+                                // get the first occuring date
+                                const firstChatroom =
+                                    newChatrooms[Object.keys(newChatrooms)[0]];
 
-                                    const firstDateOcurred = new Date(
-                                        firstChatroom.messages[0].date_str
-                                    );
+                                const firstDateOcurred = new Date(
+                                    firstChatroom.messages[0].date_str
+                                );
 
-                                    // set the dates
-                                    props.setDateFilter([
-                                        firstDateOcurred,
-                                        moment(firstDateOcurred)
-                                            .add(item.value, "months")
-                                            .toDate(),
-                                    ]);
-                                });
-                            }}
-                        >
-                            {item.label}
-                        </Menu.Item>
-                    ))}
-                    <Menu.Item closeMenuOnClick={false}>
-                        <DatePicker
-                            variant="unstyled"
-                            type="range"
-                            allowSingleDateInRange
-                            placeholder="Pick dates range"
-                            value={props.dateFilter}
-                            onChange={props.setDateFilter}
-                            className="  bg-opacity-90 rounded font-medium"
-                        />
-                    </Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+                                // set the dates
+                                props.setDateFilter([
+                                    firstDateOcurred,
+                                    moment(firstDateOcurred)
+                                        .add(item.value, "months")
+                                        .toDate(),
+                                ]);
+                            });
+                        }}
+                    >
+                        {item.label}
+                    </button>
+                ))}
+                <div className=" border-t border-black border-opacity-20 mt-3 pt-3">
+                    <DatePicker
+                        type="range"
+                        weekendDays={[0, 6]}
+                        firstDayOfWeek={0}
+                        allowSingleDateInRange
+                        placeholder="Pick dates range"
+                        value={props.dateFilter}
+                        onChange={props.setDateFilter}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

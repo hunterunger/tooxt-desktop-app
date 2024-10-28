@@ -1,7 +1,6 @@
 "use client";
 import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
 import { useEffect, useState } from "react";
-import { Loader } from "@mantine/core";
 import {
     IconChevronDown,
     IconChevronRight,
@@ -13,6 +12,7 @@ import Image from "next/image";
 import { ContactCard } from "@/util/addressBookTools";
 import Link from "next/link";
 import { ChatroomType, MessageType } from "@/ts/messageTypes";
+import Loader from "@/shared/Loader";
 
 export function GroupItem(props: {
     chatroom: ChatroomType;
@@ -88,7 +88,7 @@ export function GroupItem(props: {
                         }
                         href={"/details?id=" + chatroom.chat_id}
                     >
-                        {"Continue"}
+                        {"Select"}
                         <IconChevronRight size={16} />
                     </Link>
                 </div>

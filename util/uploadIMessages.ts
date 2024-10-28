@@ -12,6 +12,7 @@ import { ChatroomType } from "@/ts/messageTypes";
 import { ProjectType } from "@/ts/dataTypes";
 import { logEvent } from "firebase/analytics";
 import { firebaseAnalytics } from "./firebase/firebaseFrontend";
+import pluralize from "./pluralize";
 
 export default async function uploadImessages(
     chatroom: ChatroomType,
@@ -191,7 +192,12 @@ export default async function uploadImessages(
 
         notifications.show({
             title: "Unable to Upload Attachment",
-            message: `There was a problem uploading ${attachmentErrors.length} attachments. This is likely because the related message is not synced to this device. Scroll back through the chat in the Messages app to sync the message.`,
+            message: `We encountered an issue uploading ${
+                attachmentErrors.length
+            } ${pluralize(
+                "attachment",
+                attachmentErrors.length
+            )}, likely because the message is not synced to your device. Don't worry—you can still print your book, even without this attachment. To include it, please scroll through the chat in the Messages app and make sure it's synced.`,
             autoClose: false,
             withCloseButton: true,
         });

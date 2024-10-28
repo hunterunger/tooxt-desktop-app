@@ -1,9 +1,9 @@
 "use client";
+import "./globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 
-import "./globals.css";
 import { Inter } from "next/font/google";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "@/theme";
@@ -36,12 +36,7 @@ export default function RootLayout({
                     inter.className + "  bg-white dark:bg-zinc-900 text-black"
                 }
             >
-                <MantineProvider
-                    withGlobalClasses
-                    withCssVariables
-                    withStaticClasses
-                    theme={theme}
-                >
+                <MantineProvider theme={theme}>
                     <Notifications />
                     {children}
                 </MantineProvider>
