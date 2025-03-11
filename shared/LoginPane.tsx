@@ -36,9 +36,9 @@ export default function LoginPane() {
             lastName: "",
         },
         validate: {
-            email: (value) =>
+            email: (value: string) =>
                 /^\S+@\S+$/.test(value) ? null : "Invalid email",
-            password: (value) =>
+            password: (value: string | any[]) =>
                 value.length > 5 ? null : "Password is too short",
         },
     });
