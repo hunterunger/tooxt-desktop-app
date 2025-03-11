@@ -8,7 +8,9 @@ import { Inter } from "next/font/google";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "@/theme";
 import { Notifications } from "@mantine/notifications";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
+import MetaPixelScript from "@/components/MetaPixelScript";
+import { trackCustomEvent } from "@/components/MetaPixelEvents";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,10 @@ export default function RootLayout({
         }
     }, []);
 
+    useLayoutEffect(() => {
+        trackCustomEvent("iMessage App");
+    }, []);
+
     return (
         <html lang="en">
             <head>
@@ -36,6 +42,7 @@ export default function RootLayout({
                     inter.className + "  bg-white dark:bg-zinc-900 text-black"
                 }
             >
+                <MetaPixelScript />
                 <MantineProvider theme={theme}>
                     <Notifications />
                     {children}

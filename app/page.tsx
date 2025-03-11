@@ -6,19 +6,13 @@ import Loader from "@/shared/Loader";
 import { firebaseAuth } from "@/util/firebase/firebaseFrontend";
 import trimTextPretty from "@/util/trimTextPretty";
 import { NativeSelect, TextInput } from "@mantine/core";
-import {
-    IconFolder,
-    IconHistory,
-    IconLogin,
-    IconSearch,
-    IconX,
-} from "@tabler/icons-react";
+import { IconFolder, IconHistory, IconLogin, IconSearch, IconX, } from "@tabler/icons-react";
 import { open } from "@tauri-apps/api/dialog";
 import { invoke } from "@tauri-apps/api/tauri";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { GroupItem } from "../components/GroupItem";
+import { GroupItem } from "@/components/GroupItem";
 import useDatabaseMessages from "@/util/useDatabaseMessages";
 import ProgressStepper from "@/components/ProgressStepper";
 import { ChatroomType } from "@/ts/messageTypes";
@@ -46,7 +40,7 @@ export default function Home() {
         loadingMessages,
         contacts,
         chatrooms,
-        permissionSuccess,
+        // permissionSuccess,
         setPermissionSuccess,
     } = useDatabaseMessages(
         databasePath,
@@ -63,8 +57,7 @@ export default function Home() {
             search || chatIdPin
                 ? Object.values(chatrooms).filter((chatroom) => {
                       if (chatIdPin) {
-                          if (chatroom.chat_id === chatIdPin) return true;
-                          return false;
+                          return chatroom.chat_id === chatIdPin;
                       }
                       // search by name
                       if (search) {
@@ -141,8 +134,7 @@ export default function Home() {
                         ) : user ? (
                             <button
                                 onClick={() => {
-                                    const auth = firebaseAuth;
-                                    auth.signOut();
+                                    firebaseAuth.signOut();
                                 }}
                                 className=" flex gap-1 text-end flex-row font-medium dark:text-white text-black text-opacity-40 rounded-md w-fit items-center text-xs"
                             >

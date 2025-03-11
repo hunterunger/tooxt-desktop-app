@@ -39,3 +39,5 @@ next-env.d.ts
 
 # custom
 certificate-base64.txt
+
+/.idea
