@@ -122,13 +122,12 @@ export default function Home() {
             {openLoginPanel && (
                 <LoginOverlay onClose={() => setOpenLoginPanel(false)} />
             )}
-            <main className="flex min-h-screen flex-col gap-3">
+            <main className="flex h-screen flex-col gap-0">
                 <DiskAccessDialog setPermissionSuccess={setPermissionSuccess} />
 
-                <div className="flex flex-col gap-3 fixed  bg-white dark:bg-zinc-800  w-full z-10 p-3">
+                <div className="flex flex-col gap-3 relative bg-white dark:bg-zinc-800 w-full z-10 p-3 pt-8 shadow-md">
                     <div className="flex gap-2 justify-between ">
-                        {/* <DateRangeSelector dateFilter={dateFilter} setDateFilter={setDateFilter} /> */}
-                        <img src="/logo.png?" className="w-24 h-full" />
+                        <img src="/logo.png?" className="w-24 h-full object-contain" />
                         {loading ? (
                             <></>
                         ) : user ? (
@@ -136,14 +135,14 @@ export default function Home() {
                                 onClick={() => {
                                     firebaseAuth.signOut();
                                 }}
-                                className=" flex gap-1 text-end flex-row font-medium dark:text-white text-black text-opacity-40 rounded-md w-fit items-center text-xs"
+                                className=" flex gap-1 text-end flex-row font-medium dark:text-white text-black text-opacity-40 rounded-xl w-fit items-center text-xs"
                             >
                                 Logout <br /> {user.email}
                             </button>
                         ) : (
                             <button
                                 onClick={() => setOpenLoginPanel(true)}
-                                className=" flex gap-1 flex-row font-medium bg-msg-blue text-white rounded-md w-fit items-center text-sm"
+                                className=" flex gap-1 flex-row font-medium bg-msg-blue text-white rounded-xl w-fit items-center text-sm"
                             >
                                 <IconLogin size={16} />
                                 Login
@@ -225,7 +224,6 @@ export default function Home() {
                         />
                     </div>
                 </div>
-                <div className="m-20" />
                 {chatrooms != undefined &&
                     Object.keys(filteredChatrooms).length === 0 && (
                         <div className="dark:text-white text-black text-opacity-50 text-center h-full w-full mt-12 justify-center items-center">
@@ -238,7 +236,7 @@ export default function Home() {
                         Retrieving conversations...
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-3 w-full relative p-3">
+                    <div className=" gap-3 w-full relative px-3 pb-3 overflow-scroll ">
                         {filteredChatrooms.map((chatroom) => (
                             <GroupItem
                                 contacts={contacts || []}

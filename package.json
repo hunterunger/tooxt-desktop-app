@@ -10,7 +10,6 @@
         "tauri": "tauri"
     },
     "dependencies": {
-        "@heroicons/react": "^2.1.5",
         "@mantine/core": "^7.17.1",
         "@mantine/dates": "^7.12.1",
         "@mantine/form": "^7.17.1",

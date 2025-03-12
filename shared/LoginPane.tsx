@@ -158,7 +158,7 @@ export default function LoginPane() {
                             className=" font-medium"
                         />
                         <button
-                            className="mt-4 bg-primary-1 text-primary-light p-2 rounded-lg hover:bg-primary-light hover:text-primary-1 w-full duration-200 border-primary-1 border-2 text-white"
+                            className="mt-4 bg-primary-1 p-2 rounded-lg hover:bg-primary-light hover:text-primary-1 w-full duration-200 border-primary-1 border-2 text-white"
                             type="submit"
                             color="black"
                         >

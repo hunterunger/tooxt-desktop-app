@@ -5,6 +5,8 @@ mod imessage;
 use crate::imessage::get_messages_json;
 use imessage_database::util::dirs::default_db_path;
 use std::{fs, process::Command};
+use window_vibrancy::{ apply_vibrancy, NSVisualEffectMaterial};
+use tauri::Manager;
 
 #[tauri::command]
 fn get_messages(
@@ -121,6 +123,19 @@ fn main() {
     //     .add_submenu(submenu);
 
     tauri::Builder::default()
+        .setup(|app| {
+            let window = app.get_window("main").unwrap();
+    
+            #[cfg(target_os = "macos")]
+            apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
+            .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
+    
+            #[cfg(target_os = "windows")]
+            apply_blur(&window, Some((18, 18, 18, 125)))
+            .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+    
+            Ok(())
+        })
         // .menu(menu)
         .invoke_handler(tauri::generate_handler![
             get_messages,

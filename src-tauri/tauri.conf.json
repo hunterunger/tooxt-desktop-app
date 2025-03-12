@@ -8,15 +8,16 @@
     },
     "package": {
         "productName": "Tooxt Uploader",
-        "version": "0.5.8"
+        "version": "1.0.0"
     },
     "tauri": {
+        "macOSPrivateApi": true,
         "allowlist": {
             "path": {
                 "all": true
             },
             "window": {
-                "create": true
+                "all": true
             },
             "all": false,
             "dialog": {
@@ -35,6 +36,7 @@
                 "scope": [
                     "$APPDATA/*",
                     "$HOME/Library/Messages/Attachments/**",
+                    "$HOME/Library/Messages/StickerCache/**",
                     "$HOME/Library/Application Support/AddressBook/**"
                 ],
                 "writeFile": true
@@ -86,13 +88,14 @@
         },
         "windows": [
             {
+                "transparent": true,
                 "fullscreen": false,
-                "height": 600,
+                "height": 800,
                 "resizable": true,
                 "title": "Tooxt Uploader",
-                "width": 800,
-                "titleBarStyle": "Transparent",
-                "minHeight": 400,
+                "width": 600,
+                "titleBarStyle": "Overlay",
+                "minHeight": 500,
                 "minWidth": 500
             }
         ]

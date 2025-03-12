@@ -1,8 +1,8 @@
 "use client";
 
 import { createTheme, MantineColorsTuple } from "@mantine/core";
+import { colours } from "./colours";
 
-import { colors } from "./tailwind.config";
 
 const mantineColors = (color: string): MantineColorsTuple => {
     return [
@@ -22,8 +22,8 @@ const mantineColors = (color: string): MantineColorsTuple => {
 export const theme = createTheme({
     /* Put your mantine theme override here */
     colors: {
-        red: mantineColors(colors["primary-1"]),
+        red: mantineColors(colours["primary-1"]),
     },
-
     primaryColor: "red",
+    
 });

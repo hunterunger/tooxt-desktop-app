@@ -9,9 +9,8 @@ import { MessageBubble } from "../../components/GroupItem";
 import {
     IconBook2,
     IconChevronLeft,
-    IconChevronRight,
+    IconCloudUpload,
     IconExternalLink,
-    IconFileText,
     IconMessageCircle,
 } from "@tabler/icons-react";
 import ProgressStepper from "@/components/ProgressStepper";
@@ -77,7 +76,7 @@ export default function Page() {
     const thisChatroom = chatrooms?.[chatId];
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 h-screen overflow-hidden">
             <div className=" absolute opacity-0">
                 {thisChatroom !== undefined && estimatedPages === undefined && (
                     <ChatHistoryHtml
@@ -101,7 +100,7 @@ export default function Page() {
                     />
                 )}
             </div>
-            <div className="fixed w-full p-3 bg-white dark:bg-zinc-800 z-20 flex flex-col gap-3">
+            <div className="w-full p-3 pt-8 bg-white dark:bg-zinc-800 z-20 flex flex-col gap-3">
                 <DiskAccessDialog setPermissionSuccess={setPermissionSuccess} />
                 <div className="flex font-bold items-center">
                     <Link href="/">
@@ -119,24 +118,19 @@ export default function Page() {
                                 ? thisChatroom.messages.length + " messages"
                                 : "0 messages"}
 
-                            <IconFileText size={16} />
-                            {thisChatroom && estimatedPages !== undefined
-                                ? estimatedPages + " pages"
-                                : " 0 pages"}
-
                             <IconBook2 size={16} />
                             {thisChatroom && estimatedPages !== undefined
-                                ? pagesToBooks(estimatedPages) +
-                                  " " +
-                                  pluralize(
-                                      "book",
-                                      pagesToBooks(estimatedPages)
-                                  )
+                                ? "~" + pagesToBooks(estimatedPages) +
+                                " " +
+                                pluralize(
+                                    "book",
+                                    pagesToBooks(estimatedPages)
+                                )
                                 : " 0 books"}
                         </h3>
                         <button
                             className={
-                                " text-white rounded-md flex gap-1 items-center bg-primary-1 font-semibold p-2 px-2 text-sm h-min " +
+                                " text-white rounded-xl shadow-md flex gap-1 items-center justify-between bg-primary-1 font-medium p-2 px-6 text-sm h-min " +
                                 (user ? "" : "opacity-40") +
                                 (didChangeDateFilter ? "" : "opacity-40")
                             }
@@ -157,20 +151,18 @@ export default function Page() {
                             {!didChangeDateFilter
                                 ? "Select a Timeframe to Upload"
                                 : "Upload"}
-                            <IconChevronRight size={16} />
+                            <IconCloudUpload size={16} />
                         </button>
                     </div>
                 )}
             </div>
-            <div className="m-16 " />
-
             {!isUploading ? (
-                <div className=" flex flex-row h-full debug p-3 gap-3">
+                <div className=" flex flex-row p-3 gap-3 overflow-auto">
                     <div
                         onClick={() => {
                             setDidChangeDateFilter(true);
                         }}
-                        className="w-fit p-3 bg-white rounded-md h-fit border dark:border-slate-800 border-gray-200"
+                        className="w-fit p-3 bg-white rounded-xl h-fit border dark:border-slate-800 border-gray-200"
                     >
                         <DateRangeSelector
                             setDateFilter={setDateFilter}
@@ -179,43 +171,43 @@ export default function Page() {
                             chatId={parseInt(chatId)}
                         />
                     </div>
-                    <div className=" gap-1 flex flex-col border dark:border-slate-800 border-gray-200 p-3 rounded-md overflow-scroll flex-1 h-full">
-                        {thisChatroom !== undefined &&
-                            thisChatroom.messages.map((message) => (
-                                <MessageBubble
-                                    message={message}
-                                    key={message.rowid}
-                                />
-                            ))}
-                        {loadingMessages && (
-                            <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
-                                <Loader />
-                            </div>
-                        )}
-                        {thisChatroom === undefined && !loadingMessages && (
-                            <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
-                                No messages for this timeframe
-                            </div>
-                        )}
+                        <div className=" rounded-md overflow-scroll flex flex-col gap-3">
+                            {thisChatroom !== undefined &&
+                                thisChatroom.messages.map((message) => (
+                                    <MessageBubble
+                                        message={message}
+                                        key={message.rowid}
+                                    />
+                                ))}
+                            {loadingMessages && (
+                                <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
+                                    <Loader />
+                                </div>
+                            )}
+                            {thisChatroom === undefined && !loadingMessages && (
+                                <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
+                                    No messages for this timeframe
+                                </div>
+                            )}
                     </div>
                 </div>
             ) : (
                 <div className="flex w-full h-full items-center text-center text-lg justify-center my-12 dark:text-white text-black">
                     {!projectUrl ? (
-                        <p className="flex items-center gap-1">
+                        <div className="flex items-center gap-1">
                             <Loader />
                             Uploading...
-                        </p>
+                        </div>
                     ) : (
                         <div className="flex flex-col gap-3 items-center font-semibold">
-                            <p>Your Project has been uploaded</p>
+                            <p>Your project has uploaded</p>
                             <a
                                 href={projectUrl}
                                 target="_blank"
-                                className=" bg-primary-1 text-white rounded-md p-2 px-4 flex gap-2 items-center font-medium text-lg"
+                                className=" bg-primary-1 text-white rounded-2xl shadow-md p-2 px-6 flex gap-2 items-center font-medium text-lg"
                             >
-                                {"View Project"}
-                                <IconExternalLink size={24} />
+                                {"Open Project"}
+                                <IconExternalLink size={16} />
                             </a>
                         </div>
                     )}
@@ -235,8 +227,8 @@ function DateRangeSelector(props: {
     return (
         <div className=" h-fit">
             <div className=" flex flex-col gap-1 justify-start flex-wrap">
-                <div className=" border-b border-black border-opacity-20 mb-3 ">
-                    <h3 className=" flex flex-row items-center gap-1 font-medium mb-3">
+                <div className=" mb-3 ">
+                    <h3 className=" flex flex-row items-center gap-1 font-medium">
                         Select Date Range
                     </h3>
                 </div>
@@ -246,7 +238,7 @@ function DateRangeSelector(props: {
                     { label: "Last 365 Days", value: 365 },
                 ].map((item) => (
                     <button
-                        className="hover:bg-black duration-100 hover:bg-opacity-10 rounded-md px-3"
+                        className="hover:bg-black duration-100 hover:bg-opacity-10 bg-opacity-20 w-full bg-primary-dark-2 rounded-xl px-3"
                         key={item.label}
                         onClick={() => {
                             props.setDateFilter([
@@ -265,7 +257,7 @@ function DateRangeSelector(props: {
                 ].map((item) => (
                     <button
                         key={item.label}
-                        className="hover:bg-black duration-100 hover:bg-opacity-10 rounded-md px-3"
+                        className="hover:bg-black duration-100 hover:bg-opacity-10 bg-opacity-20 w-full bg-primary-dark-2 rounded-xl px-3"
                         onClick={() => {
                             if (item.value === null) {
                                 props.setDateFilter([
@@ -307,7 +299,9 @@ function DateRangeSelector(props: {
                         {item.label}
                     </button>
                 ))}
-                <div className=" border-t border-black border-opacity-20 mt-3 pt-3">
+                <div
+                    className="duration-100 bg-opacity-10 w-full bg-primary-dark-2 rounded-xl px-3 mt-3"
+                >
                     <DatePicker
                         type="range"
                         weekendDays={[0, 6]}

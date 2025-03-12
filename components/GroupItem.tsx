@@ -41,12 +41,12 @@ export function GroupItem(props: {
 
     return (
         <div
-            className="bg-white shadow overflow-hidden rounded-lg w-full relative border border-gray-200 "
+            className="bg-white bg-opacity-50 overflow-hidden my-3 rounded-xl w-full relative border border-gray-200 "
             key={props.chatroom.rowid}
         >
-            <div className="px-4 py-5 sm:px-6 flex flex-row justify-between sticky top-0 flex-wrap gap-3 items-center">
+            <div className="px-3 bg-white py-6 sm:px-3 flex flex-row justify-between sticky top-0 flex-wrap gap-3 items-center">
                 <div className="text-lg leading-6 font-medium text-gray-900">
-                    <div className="flex gap-1">
+                    <div className="flex gap-0">
                         <button
                             onClick={() => setShowChat(!showChat)}
                             className=" text-black text-opacity-40 hover:text-opacity-100 duration-100"
@@ -60,7 +60,7 @@ export function GroupItem(props: {
                             />
                         </button>
 
-                        <h2 className=" text-gray-800 font-bold select-text">
+                        <h2 className=" text-gray-800 font-bold text-2xl select-text">
                             {displayName}
                         </h2>
                     </div>
@@ -83,7 +83,7 @@ export function GroupItem(props: {
                 <div className="flex gap-3">
                     <Link
                         className={
-                            " text-white rounded-md flex gap-1 items-center bg-primary-1 p-2 px-2 text-sm h-min font-semibold " +
+                            " text-white rounded-xl flex gap-1 items-center bg-primary-1 p-2 px-3 shadow-md text-sm h-min font-semibold " +
                             (user ? "" : "opacity-40")
                         }
                         href={"/details?id=" + chatroom.chat_id}
@@ -104,7 +104,7 @@ export function GroupItem(props: {
                 }}
             >
                 <dl>
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-500">
                             Chat Preview
                         </dt>
